@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/auth-secret: traefik-basic-auth
+    ingress.kubernetes.io/auth-type: basic
+  labels:
+    app.kubernetes.io/name: traefik
+  name: traefik
+  namespace: traefik
+spec:
+  rules:
+  - host: traefik.$(DNS_NAME)
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-dashboard
+          servicePort: 80
+        path: /
+status:
+  loadBalancer: {}

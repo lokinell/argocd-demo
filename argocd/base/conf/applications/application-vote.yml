@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: demo-vote
+  namespace: argocd
+spec:
+  destination:
+    namespace: apps
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: vote-app/dev
+    repoURL: git@gitlab.com:seuf/argocd-demo
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false

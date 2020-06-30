@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+resources:
+  - namespace.yml
+  - install.yaml
+  - ingress.yml
+  # projects
+  # - conf/projects/project-default.yml
+  # - conf/projects/project-team-devops.yml
+  # applications
+  # - conf/applications/application-vote.yml
+
+generatorOptions:
+  disableNameSuffixHash: true

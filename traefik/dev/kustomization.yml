@@ -1,0 +1,26 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: traefik
+bases:
+  - ../base
+
+generatorOptions:
+ disableNameSuffixHash: true
+
+# generate a ConfigMap named nodejs-config.
+configMapGenerator:
+  - name: traefik-config
+    behavior: merge
+    literals:
+      - DNS_NAME=demo
+
+# Fetch variables from configmap
+vars:
+- name: DNS_NAME
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: traefik-config
+  fieldref:
+    fieldpath: data.DNS_NAME

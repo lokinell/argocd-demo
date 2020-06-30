@@ -1,0 +1,32 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: traefik
+resources:
+  - namespace.yml
+  - traefik-serviceaccount.yml
+  - traefik-clusterrole.yml
+  - traefik-clusterrolebindings.yml
+  - traefik-pvc.yml
+  - traefik-svc-loadbalancer.yml
+  - traefik-svc-dashboard.yml
+  - traefik-svc-prometheus.yml
+  - traefik-deployment.yml
+  - traefik-ingress.yml
+
+generatorOptions:
+ disableNameSuffixHash: false
+
+# secret containing traefik ingress basic auth
+secretGenerator:
+  - name: traefik-default-cert
+    behavior: create
+    files:
+      - tls.key
+      - tls.pem
+
+configMapGenerator:
+  - name: traefik-config
+    behavior: create
+    files:
+      - traefik.toml

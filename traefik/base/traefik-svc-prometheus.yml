@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: traefik
+  name: traefik-prometheus
+  namespace: traefik
+spec:
+  ports:
+  - name: metrics
+    port: 9100
+    protocol: TCP
+    targetPort: metrics
+  selector:
+    app: traefik
+  sessionAffinity: None
+  type: ClusterIP

@@ -1,0 +1,43 @@
+# traefik.toml
+logLevel = "info"
+defaultEntryPoints = ["http","https"]
+insecureSkipVerify = true
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+    compress = true
+    [entryPoints.http.redirect]
+        regex = "^http://(.*)"
+        replacement = "https://$1"
+    [entryPoints.https]
+    address = ":443"
+    compress = true
+    [[entryPoints.https.tls.certificates]]
+      certFile = "/ssl/tls.pem"
+      keyFile = "/ssl/tls.key"
+    [entryPoints.traefik]
+    address = ":8080"
+    [entryPoints.prometheus]
+    address = ":9100"
+[ping]
+entryPoint = "http"
+[kubernetes]
+    [kubernetes.ingressEndpoint]
+        publishedService = "traefik/traefik"
+[traefikLog]
+    format = "json"
+
+#[acme]
+#KeyType = "RSA4096"
+#email = "thierry@malt.com"
+#storage = "/acme/acme.json"
+#entryPoint = "https"
+#onHostRule = true
+#    [acme.tlsChallenge]
+
+[api]
+    entryPoint = "traefik"
+    dashboard = true
+[metrics]
+    [metrics.prometheus]
+    entryPoint = "prometheus"

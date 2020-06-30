@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  description: Default (multiple teams shared responsability)
+  destinations:
+  - namespace: apps
+    server: https://kubernetes.default.svc
+  namespaceResourceBlacklist:
+  - group: ""
+    kind: ResourceQuota
+  - group: ""
+    kind: LimitRange
+  - group: ""
+    kind: NetworkPolicy
+  orphanedResources:
+    warn: false
+  roles:
+  - description: Sync privileges for default applications
+    jwtTokens:
+    - iat: 1572438785
+    name: ci-role
+    policies:
+    - p, proj:default:ci-role, applications, sync, default/*, allow
+    - p, proj:default:ci-role, applications, override, default/*, allow
+    - p, proj:default:ci-role, applications, update, default/*, allow
+  sourceRepos:
+  - git@gitlab.com:maltcommunity/app-config.git

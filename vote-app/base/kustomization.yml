@@ -1,0 +1,32 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: apps
+resources:
+  - namespace.yml
+  - db-deployment.yaml
+  - db-service.yaml
+  - ingress.yml
+  - redis-deployment.yaml
+  - redis-service.yaml
+  - result-deployment.yaml
+  - result-service.yaml
+  - vote-deployment.yaml
+  - vote-service.yaml
+  - worker-deployment.yaml
+
+# Fetch variables from configmap
+vars:
+- name: DNS_NAME
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: apps-config
+  fieldref:
+    fieldpath: data.DNS_NAME
+
+configMapGenerator:
+  - name: apps-config
+    behavior: create
+    literals:
+      - DNS_NAME=domain.com
