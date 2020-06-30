@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
-    ingress.kubernetes.io/auth-secret: traefik-basic-auth
-    ingress.kubernetes.io/auth-type: basic
   labels:
     app.kubernetes.io/name: traefik
   name: traefik
