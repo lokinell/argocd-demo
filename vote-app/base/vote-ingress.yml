@@ -9,6 +9,6 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: vote-service
+          serviceName: vote
           servicePort: 80
         path: /

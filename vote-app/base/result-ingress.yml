@@ -9,6 +9,6 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: result-service
+          serviceName: result
           servicePort: 80
         path: /
