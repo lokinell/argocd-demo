@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Default (multiple teams shared responsability)
   destinations:
-  - namespace: apps
+  - namespace: default
     server: https://kubernetes.default.svc
   namespaceResourceBlacklist:
   - group: ""

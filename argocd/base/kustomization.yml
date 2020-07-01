@@ -6,4 +6,5 @@ resources:
   - namespace.yml
   - install.yaml
   - ingress.yml
-  - conf/applications/application-traefik.yml
+  # - conf/projects/project-team-devops.yml
+  # - conf/applications/application-traefik.yml
