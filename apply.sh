@@ -1,15 +1,5 @@
 #!/bin/bash
 
-function kb () {
-    kustomize build --load_restrictor none --enable_alpha_plugins $1
-}
-
-
-
-echo "--------------------------"
-echo "        KUBERNETES        "
-echo "--------------------------"
-
 echo "Listing clusters..."
 k3d_exists=$(k3d get cluster | grep demo | wc -l)
 
@@ -29,8 +19,8 @@ kubectl config use-context k3d-demo
 echo "--------------------------"
 echo "         ARGOCD           "
 echo "--------------------------"
-kb traefik/dev | kubectl apply -f -
-kb argocd/dev | kubectl apply -f -
+kubectl apply -k traefik/dev
+kubectl apply -k argocd/dev
 
 echo "Waiting for traefik LoadBalancer IP..."
 while lb_ip=$(kubectl -n traefik get svc traefik -o jsonpath='{.status.loadBalancer.ingress[0].ip}'); do
