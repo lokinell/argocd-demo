@@ -34,6 +34,8 @@ while lb_ip=$(kubectl -n traefik get svc traefik -o jsonpath='{.status.loadBalan
 
 done
 echo "LB IP is $lb_ip"
+echo "Add this line in your /etc/hosts :"
+echo "$lb_ip       argocd.demo traefik.demo vote.demo result.demo"
 
 echo "Waiting for argocd-server to be ready..."
 while pod_ready=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server | grep "1/1" | wc -l); do

@@ -5,6 +5,14 @@ namespace: argocd
 bases:
   - ../base
 
+configMapGenerator:
+  - name: argocd
+    behavior: create
+    literals:
+      - environment-type=staging
+      - environment=dev
+      - DNS_DOMAIN=demo
+
 vars:
   - name: DNS_DOMAIN
     objref:
@@ -14,10 +22,3 @@ vars:
     fieldref:
       fieldpath: data.DNS_DOMAIN
 
-configMapGenerator:
-  - name: argocd
-    behavior: create
-    literals:
-      - environment-type=staging
-      - environment=dev
-      - DNS_DOMAIN=demo
