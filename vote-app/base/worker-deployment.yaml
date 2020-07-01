@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
       - image: seuf/example-votting-app-worker
+        imagePullPolicy: Always
         name: worker
         resources:
           limits:
