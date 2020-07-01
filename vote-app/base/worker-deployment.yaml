@@ -18,3 +18,7 @@ spec:
       containers:
       - image: seuf/example-votting-app-worker
         name: worker
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
