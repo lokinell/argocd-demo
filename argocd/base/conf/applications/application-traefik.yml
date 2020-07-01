@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     path: traefik/dev
-    repoURL: git@gitlab.com:seuf/argocd-demo
+    repoURL: https://gitlab.com/seuf/argocd-demo.git
     targetRevision: master
   syncPolicy:
     automated:
