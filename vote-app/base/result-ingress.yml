@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: result
-  namespace: apps
+  namespace: vote
 spec:
   rules:
   - host: result.$(DNS_NAME)
