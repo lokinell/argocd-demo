@@ -5,7 +5,12 @@ namespace: vote
 bases:
   - ../base
 
-# Fetch variables from configmap
+configMapGenerator:
+  - name: apps-config
+    behavior: create
+    literals:
+      - DNS_NAME=demo
+
 vars:
 - name: DNS_NAME
   objref:
@@ -15,8 +20,3 @@ vars:
   fieldref:
     fieldpath: data.DNS_NAME
 
-configMapGenerator:
-  - name: apps-config
-    behavior: create
-    literals:
-      - DNS_NAME=demo
