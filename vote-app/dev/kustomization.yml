@@ -20,10 +20,10 @@ vars:
   fieldref:
     fieldpath: data.DNS_NAME
 
-# patches:
-#   - target:
-#       group: apps
-#       version: v1
-#       kind: Deployment
-#       name: vote.*
-#     path: patch.deployment.yml
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: vote.*
+    path: patch.deployment.yml
