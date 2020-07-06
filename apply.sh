@@ -5,7 +5,6 @@ k3d_exists=$(k3d get cluster | grep demo | wc -l)
 
 if [ "$k3d_exists" == "0" ]; then
     echo "Creating kubernetes cluster..."
-    sopsd secrets/registries.enc.yml
     k3d create cluster demo -w 3 --no-lb --wait
     sleep 5
 else
