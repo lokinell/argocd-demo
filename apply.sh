@@ -18,7 +18,8 @@ kubectl config use-context k3d-demo
 echo "--------------------------"
 echo "         ARGOCD           "
 echo "--------------------------"
-kubectl apply -k traefik/dev
+# Kustomize build because of plugins
+kustomize build --load_restrictor none --enable_alpha_plugins traefik/dev | kubectl apply -f -
 kubectl apply -k argocd/dev
 
 echo "Waiting for traefik LoadBalancer IP..."

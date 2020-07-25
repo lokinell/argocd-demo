@@ -14,6 +14,21 @@ configMapGenerator:
     behavior: merge
     literals:
       - DNS_NAME=demo
+    files:
+      - config/dynamic.toml
+
+# secret containing traefik ingress certificate
+secretGenerator:
+  - name: traefik-default-cert
+    behavior: create
+    files:
+      - config/tls.key
+      - config/tls.crt
+
+# Sops Generator used to create secret from sops encrypted file
+# https://github.com/mozilla/sops
+# generators:
+#   - sops-decoder.yml
 
 # Fetch variables from configmap
 vars:
@@ -24,3 +39,4 @@ vars:
     name: traefik-config
   fieldref:
     fieldpath: data.DNS_NAME
+

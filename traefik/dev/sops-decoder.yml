@@ -1,0 +1,12 @@
+---
+apiVersion: gitlab.com/maltcommunity
+kind: SopsDecoder
+metadata:
+  name: basicauth
+name: basicauth
+files:
+  - path: secrets/basicauth.enc
+    key_name: basicauth
+    type: raw
+options:
+  disableNameSuffixHash: true

@@ -1,0 +1,57 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[serversTransport]
+  insecureSkipVerify = true
+
+[log]
+  level = "info"
+  #format = "json"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+    [entryPoints.web.http]
+      middlewares = ["compress@file"]
+    [entryPoints.web.http.redirections.entryPoint]
+      to = "websecure"
+      scheme = "https"
+      permanent = true
+  [entryPoints.websecure]
+    address = ":443"
+    [entryPoints.websecure.http]
+      middlewares = ["compress@file"]
+    [entryPoints.websecure.http.tls]
+  [entryPoints.metrics]
+    address = ":9100"
+
+[tls.stores]
+  [tls.stores.default]
+    [tls.stores.default.defaultCertificate]
+      certFile = "/tls/tls.crt"
+      keyFile  = "/tls/tls.key"
+
+[ping]
+  entryPoint = "websecure"
+
+[providers]
+  [providers.kubernetesIngress]
+  [providers.file]
+    directory = "/config"
+    watch = true
+
+#[acme]
+#  KeyType = "RSA4096"
+#  email = "thierry@malt.com"
+#  storage = "/acme/acme.json"
+#  entryPoint = "websecure"
+#  onHostRule = true
+#  [acme.tlsChallenge]
+
+[api]
+  dashboard = true
+
+[metrics]
+  [metrics.prometheus]
+    entryPoint = "metrics"

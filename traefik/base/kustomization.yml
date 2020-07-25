@@ -4,29 +4,20 @@ kind: Kustomization
 namespace: traefik
 resources:
   - namespace.yml
-  - traefik-serviceaccount.yml
-  - traefik-clusterrole.yml
-  - traefik-clusterrolebindings.yml
+  - traefik-rbac.yml
+  - traefik-crd.yml
   - traefik-pvc.yml
-  - traefik-svc-loadbalancer.yml
-  - traefik-svc-dashboard.yml
-  - traefik-svc-prometheus.yml
+  - traefik-svc.yml
+  - traefik-svc-lb.yml
   - traefik-deployment.yml
-  - traefik-ingress.yml
+  - whoami.yml
 
 generatorOptions:
- disableNameSuffixHash: false
-
-# secret containing traefik ingress basic auth
-secretGenerator:
-  - name: traefik-default-cert
-    behavior: create
-    files:
-      - tls.key
-      - tls.pem
+ disableNameSuffixHash: true
 
 configMapGenerator:
   - name: traefik-config
     behavior: create
     files:
-      - traefik.toml
+      - config/traefik.toml
+      - config/dynamic.toml

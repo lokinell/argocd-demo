@@ -1,0 +1,26 @@
+[tls]
+  [tls.options]
+    [tls.options.default]
+      minVersion = "VersionTLS12"
+
+[http]
+  # routers
+  [http.routers.dashboard]
+    rule = "Host(`traefik.demo`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard/`) || PathPrefix(`/`))"
+    entryPoints = ["web", "websecure"]
+    service = "api@internal"
+    priority = 10
+    # middlewares = ["basic-auth"]
+    [http.routers.dashboard.tls]
+
+
+  # middlewares
+  [http.middlewares]
+    [http.middlewares.compress.compress]
+
+    [http.middlewares.strip.stripPrefixRegex]
+      regex = ["/"]
+
+    # [http.middlewares.basic-auth.basicAuth]
+    #   usersFile = "/auth/basicauth"
+      

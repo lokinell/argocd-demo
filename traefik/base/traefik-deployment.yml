@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: traefik
-        image: traefik:1.7.20
+        image: traefik:2.2.7
         imagePullPolicy: IfNotPresent
         args:
         - --configfile=/config/traefik.toml
@@ -35,9 +35,9 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /ping
-            port: http
-            scheme: HTTP
-          initialDelaySeconds: 10
+            port: https
+            scheme: HTTPS
+          initialDelaySeconds: 60
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 2
@@ -45,20 +45,14 @@ spec:
         - containerPort: 80
           name: http
           protocol: TCP
-        - containerPort: 8880
-          name: httpn
-          protocol: TCP
         - containerPort: 443
           name: https
-          protocol: TCP
-        - containerPort: 8080
-          name: dash
           protocol: TCP
         - containerPort: 9100
           name: metrics
           protocol: TCP
         readinessProbe:
-          failureThreshold: 1
+          failureThreshold: 10
           httpGet:
             path: /ping
             port: http
@@ -79,10 +73,12 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
-        - mountPath: /ssl
+        - mountPath: /tls
           name: ssl
         - mountPath: /acme
           name: acme
+        - mountPath: /auth
+          name: auth
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -98,6 +94,9 @@ spec:
         secret:
           defaultMode: 420
           secretName: traefik-default-cert
+      - name: auth
+        secret:
+          secretName: basic-auth
       - name: acme
         persistentVolumeClaim:
           claimName: traefik-acme
