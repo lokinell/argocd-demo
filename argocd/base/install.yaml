@@ -2208,6 +2208,10 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
+data:
+  repositories: |
+    - type: git
+      url: https://gitlab.com/seuf/argocd-demo.git
 ---
 apiVersion: v1
 kind: ConfigMap

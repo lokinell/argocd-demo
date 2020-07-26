@@ -20,4 +20,3 @@ configMapGenerator:
     behavior: create
     files:
       - config/traefik.toml
-      - config/dynamic.toml

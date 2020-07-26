@@ -77,8 +77,8 @@ spec:
           name: ssl
         - mountPath: /acme
           name: acme
-        - mountPath: /auth
-          name: auth
+        # - mountPath: /auth
+        #   name: auth
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -94,9 +94,9 @@ spec:
         secret:
           defaultMode: 420
           secretName: traefik-default-cert
-      - name: auth
-        secret:
-          secretName: basic-auth
+      # - name: auth
+      #   secret:
+      #     secretName: basic-auth
       - name: acme
         persistentVolumeClaim:
           claimName: traefik-acme

@@ -23,7 +23,7 @@ kustomize build --load_restrictor none --enable_alpha_plugins traefik/dev | kube
 kubectl apply -k argocd/dev
 
 echo "Waiting for traefik LoadBalancer IP..."
-while lb_ip=$(kubectl -n traefik get svc traefik -o jsonpath='{.status.loadBalancer.ingress[0].ip}'); do
+while lb_ip=$(kubectl -n traefik get svc traefik-lb -o jsonpath='{.status.loadBalancer.ingress[0].ip}'); do
     if [ -z "$lb_ip" ]; then
         echo -n "."
         sleep 3

@@ -26,3 +26,7 @@ Then edit your /etc/hosts  nd add this line (replace the ip with the correct one
 ```
 172.21.0.5       argocd.demo traefik.demo vote.demo result.demo
 ```
+
+Wait for ArgoCD to be ready, then you can access to argocd at https://argocd.demo
+
+The admin password is the name of the argocd-server pod (`kubectl -n argocd get pod -l app.kubernetes.io/name=argocd-server`)
