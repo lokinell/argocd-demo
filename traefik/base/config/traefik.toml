@@ -13,7 +13,7 @@
   [entryPoints.web]
     address = ":80"
     [entryPoints.web.http]
-      middlewares = ["compress@file"]
+      middlewares = ["compress@file", "ratelimit@file", "security-headers@file"]
     [entryPoints.web.http.redirections.entryPoint]
       to = "websecure"
       scheme = "https"
@@ -21,10 +21,20 @@
   [entryPoints.websecure]
     address = ":443"
     [entryPoints.websecure.http]
-      middlewares = ["compress@file"]
+      middlewares = ["compress@file", "ratelimit@file", "security-headers@file"]
+    [entryPoints.websecure.transport]
+      [entryPoints.websecure.transport.respondingTimeouts]
+        readTimeout = "180s"
+        writeTimeout = "180s"
+        idleTimeout = "540s"
+      [entryPoints.websecure.transport.lifeCycle]
+        requestAcceptGraceTimeout = "90s"
+        graceTimeOut = "30s"
     [entryPoints.websecure.http.tls]
   [entryPoints.metrics]
     address = ":9100"
+  [entryPoints.ping]
+    address = ":8082"
 
 [tls.stores]
   [tls.stores.default]
@@ -33,17 +43,20 @@
       keyFile  = "/tls/tls.key"
 
 [ping]
-  entryPoint = "websecure"
+  entryPoint = "ping"
 
 [providers]
+  [providers.kubernetesCRD]
   [providers.kubernetesIngress]
+    [providers.kubernetesIngress.ingressEndpoint]
+      publishedService = "traefik/traefik-lb"
   [providers.file]
     directory = "/config"
     watch = true
 
 #[acme]
 #  KeyType = "RSA4096"
-#  email = "thierry@malt.com"
+#  email = "foo@example.com"
 #  storage = "/acme/acme.json"
 #  entryPoint = "websecure"
 #  onHostRule = true

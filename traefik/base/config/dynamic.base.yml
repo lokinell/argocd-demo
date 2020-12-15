@@ -1,0 +1,44 @@
+tls:
+  options:
+    default:
+      minVersion: "VersionTLS12"
+      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"]
+
+http:
+# middlewares
+  middlewares:
+
+    compress:
+      compress: {}
+
+    strip:
+      stripPrefixRegex:
+        regex: ["/"]
+
+    ratelimit:
+      rateLimit:
+        period: 10s
+        average: 50
+        burst: 200
+    
+    security-headers:
+      headers:
+        stsSeconds: 315360000
+        browserXssFilter: true
+        contentTypeNosniff: true
+        customFrameOptionsValue: "SAMEORIGIN"
+
+    basic-auth:
+      basicAuth:
+        users:
+          - "demo:$apr1$K2JqzyQt$3bFcE963oHcDRDmzdiYEZ." # htpasswd -nb demo demo
+
+#=================
+# services
+#=================
+  services: {}
+    
+#=================
+# routers
+#=================
+  routers: {}

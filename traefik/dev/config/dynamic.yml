@@ -1,0 +1,11 @@
+http:
+  # routers
+  routers:
+  
+    dashboard:
+      rule: "Host(`traefik.demo`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard/`) || PathPrefix(`/`))"
+      entryPoints: ["websecure"]
+      service: "api@internal"
+      priority: 10
+      middlewares: ["basic-auth@file"]
+

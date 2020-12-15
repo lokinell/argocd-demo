@@ -16,6 +16,9 @@ spec:
     - protocol: TCP
       name: websecure
       port: 443
+    - protocol: TCP
+      name: ping
+      port: 8082
   selector:
     app: traefik
   sessionAffinity: None

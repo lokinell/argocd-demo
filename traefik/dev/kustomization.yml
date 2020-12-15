@@ -15,7 +15,7 @@ configMapGenerator:
     literals:
       - DNS_NAME=demo
     files:
-      - config/dynamic.toml
+      - config/dynamic.yml
 
 # secret containing traefik ingress certificate
 secretGenerator:
@@ -24,11 +24,6 @@ secretGenerator:
     files:
       - config/tls.key
       - config/tls.crt
-
-# Sops Generator used to create secret from sops encrypted file
-# https://github.com/mozilla/sops
-# generators:
-#   - sops-decoder.yml
 
 # Fetch variables from configmap
 vars:
