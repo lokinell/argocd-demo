@@ -1,26 +1,33 @@
 #!/bin/bash
 
+echo "--------------------------"
+echo "        KUBERNETES        "
+echo "--------------------------"
 echo "Listing clusters..."
-k3d_exists=$(k3d get cluster | grep demo | wc -l)
+k3d_exists=$(k3d cluster list | grep demo | wc -l | awk '{gsub(/^ +| +$/,"")} {print $0}')
 
 if [ "$k3d_exists" == "0" ]; then
     echo "Creating kubernetes cluster..."
-    k3d create cluster demo -w 3 --no-lb --wait
+    k3d cluster create demo \
+        --agents 1 \
+        --k3s-server-arg='-disable=traefik' \
+        -p '80:80@loadbalancer' \
+        -p '443:443@loadbalancer' \
+        -v /data:/data \
+        -v /media:/media \
+        --wait
     sleep 5
 else
     echo "Kubernetes cluster demo already exists..."
 fi
 
 echo "Exporting kubectl config..."
-export KUBECONFIG=$(k3d get kubeconfig demo)
 kubectl config use-context k3d-demo
 
 echo "--------------------------"
-echo "         ARGOCD           "
+echo "         TRAEFIK          "
 echo "--------------------------"
-# Kustomize build because of plugins
-kustomize build --load_restrictor none --enable_alpha_plugins traefik/dev | kubectl apply -f -
-kubectl apply -k argocd/dev
+kubectl apply -k traefik/dev
 
 echo "Waiting for traefik LoadBalancer IP..."
 while lb_ip=$(kubectl -n traefik get svc traefik-lb -o jsonpath='{.status.loadBalancer.ingress[0].ip}'); do
@@ -37,6 +44,11 @@ echo "LB IP is $lb_ip"
 echo "Add this line in your /etc/hosts :"
 echo "$lb_ip       argocd.demo traefik.demo vote.demo result.demo"
 
+
+echo "--------------------------"
+echo "         ARGOCD           "
+echo "--------------------------"
+kubectl apply -k argocd/dev
 echo "Waiting for argocd-server to be ready..."
 while pod_ready=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server | grep "1/1" | wc -l); do
     if [ "$pod_ready" == "1" ]; then
