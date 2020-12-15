@@ -38,4 +38,4 @@ spec:
     - p, proj:team-devops:ci-role, applications, override, team-devops/*, allow
     - p, proj:team-devops:ci-role, applications, update, team-devops/*, allow
   sourceRepos:
-  - git@gitlab.com:seuf/argocd-demo.git
+  - https://gitlab.com/seuf/argocd-demo.git
