@@ -10,3 +10,9 @@ resources:
   - conf/applications/application-traefik.yml
   - conf/applications/application-argocd.yml
   - conf/applications/application-vote.yml
+
+configMapGenerator:
+  - name: argocd-cm
+    behavior: merge
+    files:
+      - conf/repositories
