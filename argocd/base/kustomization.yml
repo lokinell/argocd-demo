@@ -6,10 +6,10 @@ resources:
   - namespace.yml
   - install.yaml
   - ingress.yml
-  - conf/projects/project-team-devops.yml
-  - conf/applications/application-argocd.yml
-  - conf/applications/application-traefik.yml
-  - conf/applications/application-vote.yml
+  # - conf/projects/project-team-devops.yml
+  # - conf/applications/application-argocd.yml
+  # - conf/applications/application-traefik.yml
+  # - conf/applications/application-vote.yml
 
 configMapGenerator:
   - name: argocd-cm
