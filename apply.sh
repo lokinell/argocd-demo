@@ -13,8 +13,6 @@ if [ "$k3d_exists" == "0" ]; then
         --k3s-server-arg='-disable=traefik' \
         -p '80:80@loadbalancer' \
         -p '443:443@loadbalancer' \
-        -v /data:/data \
-        -v /media:/media \
         --wait
     sleep 5
 else
