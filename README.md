@@ -14,7 +14,8 @@ To run this demo, you will need :
 ```
 k3d image import -c demo ghcr.io/dexidp/dex:v2.27.0
 k3d image import -c demo redis:5.0.10-alpine
-k3d image import -c demo argoproj/argocd:latest
+k3d image import -c demo quay.io/argoproj/argocd:latest
+k3d image import -c demo postgres:12
 ```
 
 Just run the `apply.sh` script, it will deploy everything
