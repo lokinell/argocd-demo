@@ -9,6 +9,14 @@ To run this demo, you will need :
 
 ## Quick start
 
+先用docker pull 相关的image
+执行如下命令导入到k3d
+```
+k3d image import -c demo ghcr.io/dexidp/dex:v2.27.0
+k3d image import -c demo redis:5.0.10-alpine
+k3d image import -c demo argoproj/argocd:latest
+```
+
 Just run the `apply.sh` script, it will deploy everything
 
 To acces to your web app, you need to modify your `/etc/hosts` file with the IP of the LB.

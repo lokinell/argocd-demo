@@ -9,6 +9,7 @@ k3d_exists=$(k3d cluster list | grep demo | wc -l | awk '{gsub(/^ +| +$/,"")} {p
 if [ "$k3d_exists" == "0" ]; then
     echo "Creating kubernetes cluster..."
     k3d cluster create demo \
+        --api-port 6550 \
         --agents 1 \
         --k3s-server-arg='-disable=traefik' \
         -p '80:80@loadbalancer' \
